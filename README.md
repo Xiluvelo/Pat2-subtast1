@@ -1,27 +1,78 @@
-```markdown
-# PAT2 - Subtask 1: Morse Code Research
+#include <iostream>
+#include <string>
+#include <map>
+#include <cctype> // for toupper()
+#include <algorithm> // for transform
 
-## What is Morse Code?
-Morse code is a communication system that uses a series of dots (.) and dashes (-) to represent letters, numbers, and punctuation. It was developed to transmit messages over long distances using telegraph wires.
+using namespace std;
 
-## History of Morse Code
-Morse code was invented by Samuel Morse and Alfred Vail in the 1830s. It was created specifically for use with the electrical telegraph, which was a new technology that could send messages over wires across long distances much faster than mail.
+// Function to initialize Morse code mapping
+map<char, string> initializeMorseCode() {
+    map<char, string> morseCode;
+    morseCode['A'] = ".-";
+    morseCode['B'] = "-...";
+    morseCode['C'] = "-.-.";
+    morseCode['D'] = "-..";
+    morseCode['E'] = ".";
+    morseCode['F'] = "..-.";
+    morseCode['G'] = "--.";
+    morseCode['H'] = "....";
+    morseCode['I'] = "..";
+    morseCode['J'] = ".---";
+    morseCode['K'] = "-.-";
+    morseCode['L'] = ".-..";
+    morseCode['M'] = "--";
+    morseCode['N'] = "-.";
+    morseCode['O'] = "---";
+    morseCode['P'] = ".--.";
+    morseCode['Q'] = "--.-";
+    morseCode['R'] = ".-.";
+    morseCode['S'] = "...";
+    morseCode['T'] = "-";
+    morseCode['U'] = "..-";
+    morseCode['V'] = "...-";
+    morseCode['W'] = ".--";
+    morseCode['X'] = "-..-";
+    morseCode['Y'] = "-.--";
+    morseCode['Z'] = "--..";
+    return morseCode;
+}
 
-## How Does Morse Code Work?
-Each letter, number, and punctuation mark has a unique combination of dots and dashes:
-- A dot (.) is a short signal
-- A dash (-) is three times longer than a dot
-- Spaces between dots/dashes in the same letter are very short
-- Spaces between letters are longer
-- Spaces between words are even longer
-
-## Morse Code Examples
-Here are some words translated to Morse code:
-- **HELLO:** .... . .-.. .-.. ---
-- **SOS** (distress signal): ... --- ...
-- **PAT:** .--. .- -
-
-## Resources Used
-- Wikipedia: Morse Code - https://en.wikipedia.org/wiki/Morse_code
-- Morse Code World - https://morsecode.world/
-```
+int main() {
+    map<char, string> morseCode = initializeMorseCode();
+    string inputMessage;
+    
+    cout << "=== MORSE CODE TRANSLATOR ===" << endl;
+    cout << "Enter a message to translate to Morse code: ";
+    getline(cin, inputMessage);
+    
+    // Convert to uppercase
+    transform(inputMessage.begin(), inputMessage.end(), inputMessage.begin(), ::toupper);
+    
+    cout << "\nLETTER BY LETTER TRANSLATION:" << endl;
+    cout << "=============================" << endl;
+    
+    // Display letter by letter translation
+    for (char c : inputMessage) {
+        if (morseCode.find(c) != morseCode.end()) {
+            cout << c << ": " << morseCode[c] << endl;
+        }
+    }
+    
+    cout << "\nFULL MESSAGE TRANSLATION:" << endl;
+    cout << "=========================" << endl;
+    
+    // Display full message in Morse code
+    for (char c : inputMessage) {
+        if (morseCode.find(c) != morseCode.end()) {
+            cout << morseCode[c] << " ";
+        } else if (c == ' ') {
+            cout << "  "; // Double space for word separation
+        }
+        // Ignore numbers and other characters as per instructions
+    }
+    
+    cout << "\n\n--- End of Translation ---" << endl;
+    
+    return 0;
+}
